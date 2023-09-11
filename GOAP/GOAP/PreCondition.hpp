@@ -21,9 +21,38 @@ public:
 		m_condition = preCondition->m_condition;
 		m_value = preCondition->m_value;
 	}
-	~PreCondition();
-	template<typename V> bool CheckPreCondition(const World<V> * const world) const;
-	virtual void Check();
+	~PreCondition()
+	{
+		m_ressource.clear();
+	}
+	virtual void Check()
+	{
+
+	}
+	bool CheckPreCondition(const World<T>* const world) const
+	{
+		Check();
+		const T value = world->GetRessource(m_ressource);
+		switch (m_condition)
+		{
+			case Condition::EQUALS:
+				return value == m_value;
+			case Condition::INF:
+				return value < m_value;
+			case Condition::SUP:
+				return value > m_value;
+			case Condition::INF_EQUALS:
+				return value <= m_value;
+			case Condition::SUP_EQUALS:
+				return value >= m_value;
+			case Condition::DIFF:
+				return value != m_value;
+			default:
+				return false;
+		}
+
+		return false;
+	}	
 private:
 	std::string m_ressource;
 	Condition m_condition;

@@ -3,17 +3,18 @@
 
 #include <vector>
 class Action;
-class World;
+#include "World.hpp"
 
 class GoapManager final
 {
 public:
-	GoapManager(const World * const world, std::vector<const Action*> allActions, std::vector<const Action*> objectifs);
+	GoapManager(World<float> * const world, std::vector<const Action*> allActions, std::vector<const Action*> objectifs);
 	GoapManager(const GoapManager * const goapManager);
 	~GoapManager();
 private:
 	std::vector<const Action*> m_allActions;
 	std::vector<const Action*> m_objectifs;	
+	World<float> * m_world;
 };
 
 #endif //!__GOAP_MANAGER__

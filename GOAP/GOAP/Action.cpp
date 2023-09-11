@@ -1,8 +1,9 @@
 #include "Action.hpp"
 
-Action::Action(const std::string name)
+Action::Action(const std::string name, const unsigned short couts)
 {
 	this->m_name = name;
+	this->m_couts = couts;
 }
 Action::Action(const Action* const action)
 {
@@ -39,4 +40,14 @@ void Action::AddEffect(const Effect* effect)
 std::vector<const Effect*> Action::GetEffects() const
 {
 	return this->m_effects;
+}
+
+unsigned short Action::GetCouts() const
+{
+	return this->m_couts;
+}
+
+void Action::SetCouts(const unsigned short couts)
+{
+	this->m_couts = couts;
 }

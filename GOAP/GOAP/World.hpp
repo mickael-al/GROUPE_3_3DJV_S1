@@ -11,15 +11,15 @@ class World
 public:
 	World(const std::vector<std::string> variables)
 	{
-		m_mapValue.reserve(variables.count());
-		for(int i = 0; i < variables.count(); i++) 
+		m_mapValue.reserve(variables.size());
+		for(int i = 0; i < variables.size(); i++)
 		{
 			this->m_mapValue.insert(variables[i], T());
 		}
 	}
 	World(const World<T>* const world)
 	{
-		m_mapValue.reserve(world->m_mapValue.count());
+		m_mapValue.reserve(world->m_mapValue.size());
 		this->m_mapValue = world->m_mapValue;
 	}
 	~World()
