@@ -143,7 +143,6 @@
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="GOAP.cpp" />
     <ClCompile Include="GoapManager.cpp" />
-    <ClCompile Include="PreCondition.cpp" />
     <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
