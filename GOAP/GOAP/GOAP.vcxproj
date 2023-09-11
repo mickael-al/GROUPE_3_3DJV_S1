@@ -150,6 +150,7 @@
     <ClInclude Include="Action.hpp" />
     <ClInclude Include="Effect.hpp" />
     <ClInclude Include="EnumCondition.hpp" />
+    <ClInclude Include="EnumModifier.hpp" />
     <ClInclude Include="GoapManager.hpp" />
     <ClInclude Include="PreCondition.hpp" />
     <ClInclude Include="World.hpp" />

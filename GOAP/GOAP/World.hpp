@@ -15,7 +15,7 @@ public:
 	void SetRessource(const std::string,T value);
 	T GetRessource(const std::string) const;
 private:
-	std::unordered_map<std::string, T> m_mapValue;
+	std::unordered_map<const std::string, T> m_mapValue;
 };
 
 #endif //!__WORLD__
