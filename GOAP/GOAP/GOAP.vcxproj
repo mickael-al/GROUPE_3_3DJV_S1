@@ -140,6 +140,7 @@
   </ItemDefinitionGroup>
   <ItemGroup>
     <ClCompile Include="Action.cpp" />
+    <ClCompile Include="Effect.cpp" />
     <ClCompile Include="GOAP.cpp" />
     <ClCompile Include="GoapManager.cpp" />
     <ClCompile Include="PreCondition.cpp" />
@@ -147,6 +148,7 @@
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Action.hpp" />
+    <ClInclude Include="Effect.hpp" />
     <ClInclude Include="EnumCondition.hpp" />
     <ClInclude Include="GoapManager.hpp" />
     <ClInclude Include="PreCondition.hpp" />

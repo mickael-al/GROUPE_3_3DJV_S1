@@ -1,7 +1,7 @@
 #ifndef __GOAP_MANAGER__
 #define __GOAP_MANAGER__
 
-class GoapManager
+class GoapManager final
 {
 };
 
