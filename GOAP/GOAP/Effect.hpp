@@ -9,16 +9,17 @@ enum Modifier;
 class Effect
 {
 public:
-	Effect(const std::string ressource,const Modifier mod);
+	Effect(const std::string ressource,const Modifier mod,const float value);
 	Effect(const Effect * const effect);
 	~Effect();	
 	std::string GetRessource() const;
 	Modifier GetModifier() const;
-	template<typename V> void ExecuteEffect(World<V> * const world);
-	virtual void Execute();
+	void ExecuteEffect(World<float> * const world) const;
+	virtual void Execute() const;
 private:
-	std::string m_ressource;
+	std::string m_ressource;	
 	Modifier m_modifier;
+	float m_value;
 };
 
 #endif //!__EFFECT__

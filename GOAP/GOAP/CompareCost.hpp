@@ -1,13 +1,13 @@
 #ifndef __COMPARE_COST__
 #define __COMPARE_COST__
 
-#include "Action.hpp"
+#include "WorldAction.hpp"
 
 struct CompareCost
 {
-	bool operator()(const Action*const a,const Action*const b)
+	bool operator()(const WorldAction* const a, const WorldAction* const b)
 	{
-		return a->GetCost() > b->GetCost();
+		return a->world->GetCost() > b->world->GetCost();
 	}
 };
 

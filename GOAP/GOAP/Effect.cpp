@@ -1,40 +1,42 @@
 #include "Effect.hpp"
 #include "EnumModifier.hpp"
 
-Effect::Effect(const std::string ressource, const Modifier mod)
+Effect::Effect(const std::string ressource, const Modifier mod,const float value)
 {
-	m_ressource = ressource;
-	m_modifier = mod;
+	this->m_ressource = ressource;
+	this->m_modifier = mod;
+	this->m_value = value;
 }
 
 Effect::Effect(const Effect* const effect)
 {
-	m_ressource = effect->m_ressource;
-	m_modifier = effect->m_modifier;
+	this->m_ressource = effect->m_ressource;
+	this->m_modifier = effect->m_modifier;
+	this->m_value = effect->m_value;
 }
 
 Effect::~Effect()
 {
-	m_ressource.clear();	
+	this->m_ressource.clear();
 }
 
 std::string Effect::GetRessource() const
 {
-	return m_ressource;
+	return this->m_ressource;
 }
 
 Modifier Effect::GetModifier() const
 {
-	return m_modifier;
+	return this->m_modifier;
 }
 
-template<typename V> void Effect::ExecuteEffect(World<V> * const world)
+void Effect::ExecuteEffect(World<float> * const world) const
 {	
-	world->GetRessource(m_ressource);
-	Execute();
+	world->SetRessource(this->m_ressource, m_modifier == Modifier::ADD ? this->m_value : -this->m_value);
+	this->Execute();
 }
 
-void Effect::Execute()
-{
+void Effect::Execute() const
+{ 
 
 }

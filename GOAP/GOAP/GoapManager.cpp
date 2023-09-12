@@ -3,6 +3,8 @@
 #include "PreCondition.hpp"
 #include "Effect.hpp"
 #include "EnumModifier.hpp"
+#include "Action.hpp"
+#include <assert.h>
 #include <queue>
 #include <algorithm>
 
@@ -70,41 +72,73 @@ std::vector<const Action*> GoapManager::Resolve() const//reverse AStar
 	if (m_objectifs.empty()) 
 	{
 		// Si le vector est vide
+		assert(false && "Aucun objectif à résoudre.");
 		return std::vector<const Action*>();
 	}
 
-	std::priority_queue<const Action*, std::vector<const Action*>, CompareCost> openAction;//definie une priorité sur le couts des actions
-	std::sort(m_objectifs.begin(), m_objectifs.end(), CompareCost::operator());
-	openAction.push(m_objectifs[0]);
-	const Action* currentAction = nullptr;
-
-	/*
-	Recherche : Tant que la file de priorité n'est pas vide, vous effectuez les étapes suivantes :
-a. Retirez le nœud avec le coût total le plus bas de la file de priorité. Ce nœud est généralement l'état cible que vous essayez d'atteindre.
-b. Si le nœud actuel est le point de départ, vous avez trouvé un chemin optimal.
-
-c. Sinon, pour chaque action possible à partir de l'état actuel, calculez l'état résultant en appliquant l'action inverse (puisque vous suivez le chemin inverse). Vérifiez si les préconditions de l'action inverse sont satisfaites dans l'état actuel. Si oui, mettez à jour le nœud pour représenter l'état résultant de l'action inverse, mettez à jour le coût total, et ajoutez le nœud à la file de priorité avec le nouveau coût total estimé (coût actuel + estimation du coût restant pour atteindre le point de départ).
-	*/
+	std::priority_queue<WorldAction*, std::vector<WorldAction*>, CompareCost> openWorlds;//definie une priorité sur les couts des monde generer par les actions	
+	WorldAction* current;
 	std::vector<PreCondition<float>*> conditions;
 	std::vector<const Action*> actions_resolve;
-	while (!openAction.empty())
+	std::vector<const Effect*> action_effects;
+	WorldAction* firstWorldAction = new WorldAction();
+	std::vector<WorldAction*> allWorldAction;
+	allWorldAction.reserve(100);
+
+	firstWorldAction->action = m_objectifs[0];
+	firstWorldAction->world = m_world;
+	firstWorldAction->parent = nullptr;
+	openWorlds.push(firstWorldAction);	
+	m_world->ClearCost();	
+	
+	while (!openWorlds.empty())//https://www.youtube.com/watch?v=D9Xh-zD1f4E
 	{
-		currentAction = openAction.top();
-		openAction.pop();
-		conditions = currentAction->GetPreConditions();
+		current = openWorlds.top();
+		openWorlds.pop();
+		allWorldAction.push_back(current);
+
+		conditions = current->action->GetPreConditions();
 		for (int i = 0; i < conditions.size(); i++)
 		{
-			if (!conditions[i]->CheckPreCondition(m_world))
+			if (!conditions[i]->CheckPreCondition(current->world))
 			{
 				actions_resolve = conditions[i]->GetResolver();
+				assert(!actions_resolve.empty() && "Aucune action de résolution trouvée.");
 				for (int j = 0; j < actions_resolve.size(); j++)
 				{
-					openAction.push(actions_resolve[j]);
+					WorldAction* nwa = new WorldAction();
+					nwa->action = actions_resolve[j];
+					nwa->world = new World<float>(current->world);
+					nwa->world->AddCost(nwa->action->GetCost());
+					action_effects = nwa->action->GetEffects();
+					for (int a = 0; a < action_effects.size(); a++)
+					{
+						action_effects[a]->ExecuteEffect(nwa->world);
+					}
+					nwa->parent = current;
+					openWorlds.push(nwa);
 				}
 			}
-		}
+		}		
 	}
 
-	// Si la file de priorité est vide et que rien a ététrouver pour le premier objectif
-	return std::vector<const Action*>();
+	std::vector<const Action*> path;
+	while (current != nullptr)
+	{
+		path.push_back(current->action);
+		current = current->parent;
+	}
+
+	assert(!path.empty() && "Aucun chemin trouvé.");
+
+	current = allWorldAction[0];
+	allWorldAction.erase(allWorldAction.begin());
+	delete current;
+	for (int i = 0; i < allWorldAction.size(); i++)
+	{
+		delete allWorldAction[i]->world;
+		delete allWorldAction[i];
+	}
+	
+	return path;
 }
