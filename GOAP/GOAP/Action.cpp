@@ -1,9 +1,9 @@
 #include "Action.hpp"
 
-Action::Action(const std::string name, const unsigned short couts)
+Action::Action(const std::string name, const unsigned short cost)
 {
 	this->m_name = name;
-	this->m_couts = couts;
+	this->m_cost = cost;
 }
 Action::Action(const Action* const action)
 {
@@ -25,11 +25,11 @@ std::string Action::GetName() const
 {
 	return this->m_name;
 }
-void Action::AddPreCondition(const PreCondition* preCondition)
+void Action::AddPreCondition(PreCondition<float>* preCondition)
 {
 	this->m_preConditions.push_back(preCondition);
 }
-std::vector<const PreCondition*> Action::GetPreConditions() const
+std::vector<PreCondition<float>*> Action::GetPreConditions() const
 {
 	return this->m_preConditions;
 }
@@ -42,12 +42,12 @@ std::vector<const Effect*> Action::GetEffects() const
 	return this->m_effects;
 }
 
-unsigned short Action::GetCouts() const
+unsigned short Action::GetCost() const
 {
-	return this->m_couts;
+	return this->m_cost;
 }
 
-void Action::SetCouts(const unsigned short couts)
+void Action::SetCost(const unsigned short cost)
 {
-	this->m_couts = couts;
+	this->m_cost = cost;
 }

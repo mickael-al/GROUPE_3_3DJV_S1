@@ -18,6 +18,15 @@ Effect::~Effect()
 	m_ressource.clear();	
 }
 
+std::string Effect::GetRessource() const
+{
+	return m_ressource;
+}
+
+Modifier Effect::GetModifier() const
+{
+	return m_modifier;
+}
 
 template<typename V> void Effect::ExecuteEffect(World<V> * const world)
 {	

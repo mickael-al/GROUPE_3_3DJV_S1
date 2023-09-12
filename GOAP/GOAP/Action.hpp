@@ -3,29 +3,29 @@
 
 #include <iostream>
 #include <vector>
+#include "PreCondition.hpp"
 
-class PreCondition;
 class Effect;
 
 class Action final
 {
 public:
-	Action(const std::string name,const unsigned short couts = 1);
+	Action(const std::string name,const unsigned short cost = 1);
 	Action(const Action * const action);
 	~Action();
 	void SetName(const std::string name);
 	std::string GetName() const;
-	unsigned short GetCouts() const;
-	void SetCouts(const unsigned short couts);
-	void AddPreCondition(const PreCondition* preCondition);
-	std::vector<const PreCondition*> GetPreConditions() const;
+	unsigned short GetCost() const;
+	void SetCost(const unsigned short couts);
+	void AddPreCondition(PreCondition<float>* preCondition);
+	std::vector<PreCondition<float>*> GetPreConditions() const;
 	void AddEffect(const Effect* effect);
 	std::vector<const Effect*> GetEffects() const;
 private:
 	std::string m_name;
-	std::vector<const PreCondition*> m_preConditions;
+	std::vector<PreCondition<float>*> m_preConditions;
 	std::vector<const Effect*> m_effects;
-	unsigned short m_couts;
+	unsigned short m_cost;
 };
 
 #endif // !__ACTION__

@@ -1,2 +1,16 @@
-﻿  GoapManager.cpp
-  GOAP.vcxproj -> C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\Debug\GOAP.exe
+﻿  Action.cpp
+  Effect.cpp
+  GOAP.cpp
+  GoapManager.cpp
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(30,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(33,21): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(42,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(45,21): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(48,22): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(77,75): error C3867: 'CompareCost::operator ()' : syntaxe non-standard ; utilisez '&' pour créer un pointeur vers un membre
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(77,7): error C2672: 'std::sort' : fonction correspondante surchargée introuvable
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(77,75): error C2780: 'void std::sort(const _RanIt,const _RanIt)' : 2 arguments attendus - 3 fournis
+C:\Program Files (x86)\Microsoft Visual Studio\2019\Community\VC\Tools\MSVC\14.29.30133\include\algorithm(7084): message : voir la déclaration de 'std::sort'
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(95,21): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(100,23): warning C4018: '<' : incompatibilité signed/unsigned
+  Génération de code en cours...

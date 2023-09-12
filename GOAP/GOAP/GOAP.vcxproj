@@ -143,10 +143,10 @@
     <ClCompile Include="Effect.cpp" />
     <ClCompile Include="GOAP.cpp" />
     <ClCompile Include="GoapManager.cpp" />
-    <ClCompile Include="World.cpp" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Action.hpp" />
+    <ClInclude Include="CompareCost.hpp" />
     <ClInclude Include="Effect.hpp" />
     <ClInclude Include="EnumCondition.hpp" />
     <ClInclude Include="EnumModifier.hpp" />

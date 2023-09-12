@@ -4,6 +4,9 @@
 #include <iostream>
 #include "World.hpp"
 #include "EnumCondition.hpp"
+#include "Effect.hpp"
+
+class Action;
 
 template<typename T>
 class PreCondition
@@ -29,6 +32,16 @@ public:
 	{
 
 	}
+
+	std::string GetRessource() const
+	{
+		return m_ressource;
+	}
+
+	Condition GetCondition() const
+	{
+		return m_condition;
+	}
 	bool CheckPreCondition(const World<T>* const world) const
 	{
 		Check();
@@ -53,10 +66,19 @@ public:
 
 		return false;
 	}	
+	void SetResolver(std::vector<const Action*> actions)
+	{
+		m_resolver = actions;
+	}	
+	std::vector<const Action*> GetResolver() const
+	{
+		return m_resolver;
+	}
 private:
 	std::string m_ressource;
 	Condition m_condition;
 	T m_value;
+	std::vector<const Action*> m_resolver;
 };
 
 #endif //!__PRE_CONDITION__
