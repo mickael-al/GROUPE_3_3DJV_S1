@@ -28,7 +28,7 @@ public:
 	{
 		m_ressource.clear();
 	}
-	virtual void Check()
+	virtual void Check() const
 	{
 
 	}
@@ -42,7 +42,7 @@ public:
 	{
 		return m_condition;
 	}
-	bool CheckPreCondition(const World<T>* const world) const
+	bool CheckPreCondition(World<T>* const world) const
 	{
 		Check();
 		const T value = world->GetRessource(m_ressource);
@@ -68,7 +68,7 @@ public:
 	}	
 	void SetResolver(std::vector<const Action*> actions)
 	{
-		m_resolver = actions;
+		m_resolver = actions;			
 	}	
 	std::vector<const Action*> GetResolver() const
 	{

@@ -8,14 +8,15 @@ class Action;
 class GoapManager final
 {
 public:
-	GoapManager(World<float> * const world, std::vector<const Action*> allActions, std::vector<const Action*> objectifs);
+	GoapManager(World<float> * const world, std::vector<Action*> allActions, std::vector<Action*> objectifs);
 	GoapManager(const GoapManager * const goapManager);	
-	~GoapManager();
-	void CalculateResolver() const;
+	~GoapManager();	
 	std::vector<const Action*> Resolve() const;
 private:
-	std::vector<const Action*> m_allActions;
-	std::vector<const Action*> m_objectifs;	
+	void CalculateResolver() const;
+private:
+	std::vector<Action*> m_allActions;
+	std::vector<Action*> m_objectifs;	
 	World<float> * m_world;
 }; 
 

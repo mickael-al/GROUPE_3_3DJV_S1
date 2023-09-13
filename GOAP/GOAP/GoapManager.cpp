@@ -1,6 +1,5 @@
 #include "GoapManager.hpp"
 #include "CompareCost.hpp"
-#include "PreCondition.hpp"
 #include "Effect.hpp"
 #include "EnumModifier.hpp"
 #include "Action.hpp"
@@ -8,11 +7,13 @@
 #include <queue>
 #include <algorithm>
 
-GoapManager::GoapManager(World<float> * const world, std::vector<const Action*> allActions, std::vector<const Action*> objectifs)
+GoapManager::GoapManager(World<float> * const world, std::vector<Action*> allActions, std::vector<Action*> objectifs)
 {
 	m_allActions = allActions;
 	m_objectifs = objectifs;
 	m_world = world;
+	//assert(false && "Objectif n'est pas dans action");
+	CalculateResolver();
 }
 
 GoapManager::GoapManager(const GoapManager* const goapManager)
@@ -65,6 +66,17 @@ void GoapManager::CalculateResolver() const
 		}
 		precondition[p]->SetResolver(effect_to_actions);
 	}
+
+	for (int i = 0; i < precondition.size(); i++)
+	{
+		std::string allAction;
+		std::vector<const Action*> resolver = precondition[i]->GetResolver();
+		for (int j = 0; j < resolver.size(); j++)
+		{
+			allAction += resolver[j]->GetName() + " ";
+		}
+		std::cout << "Precondition : " << precondition[i]->GetRessource() << " -> " << allAction << std::endl;
+	}
 }
 
 std::vector<const Action*> GoapManager::Resolve() const//reverse AStar
@@ -77,12 +89,12 @@ std::vector<const Action*> GoapManager::Resolve() const//reverse AStar
 	}
 
 	std::priority_queue<WorldAction*, std::vector<WorldAction*>, CompareCost> openWorlds;//definie une priorité sur les couts des monde generer par les actions	
-	WorldAction* current;
+	WorldAction* current = nullptr;
 	std::vector<PreCondition<float>*> conditions;
 	std::vector<const Action*> actions_resolve;
 	std::vector<const Effect*> action_effects;
 	WorldAction* firstWorldAction = new WorldAction();
-	std::vector<WorldAction*> allWorldAction;
+	std::vector<WorldAction*> allWorldAction;	
 	allWorldAction.reserve(100);
 
 	firstWorldAction->action = m_objectifs[0];
@@ -90,19 +102,25 @@ std::vector<const Action*> GoapManager::Resolve() const//reverse AStar
 	firstWorldAction->parent = nullptr;
 	openWorlds.push(firstWorldAction);	
 	m_world->ClearCost();	
-	
-	while (!openWorlds.empty())//https://www.youtube.com/watch?v=D9Xh-zD1f4E
-	{
-		current = openWorlds.top();
-		openWorlds.pop();
-		allWorldAction.push_back(current);
 
+	while (!openWorlds.empty())
+	{
+		current = openWorlds.top();		
+		openWorlds.pop();
+
+		allWorldAction.push_back(current);
+		//current->world->Print();
 		conditions = current->action->GetPreConditions();
 		for (int i = 0; i < conditions.size(); i++)
 		{
-			if (!conditions[i]->CheckPreCondition(current->world))
+			current->allConditions.push_back(conditions[i]);
+		}
+		std::vector<WorldAction*> createwa;
+		for (int i = 0; i < current->allConditions.size(); i++)
+		{			
+			if (!current->allConditions[i]->CheckPreCondition(current->world))
 			{
-				actions_resolve = conditions[i]->GetResolver();
+				actions_resolve = current->allConditions[i]->GetResolver();
 				assert(!actions_resolve.empty() && "Aucune action de résolution trouvée.");
 				for (int j = 0; j < actions_resolve.size(); j++)
 				{
@@ -117,9 +135,22 @@ std::vector<const Action*> GoapManager::Resolve() const//reverse AStar
 					}
 					nwa->parent = current;
 					openWorlds.push(nwa);
+					createwa.push_back(nwa);
 				}
+			}	
+			else
+			{
+				current->allConditions.erase(current->allConditions.begin() + i);
+				i--;				
 			}
-		}		
+		}
+		for (int i = 0; i < current->allConditions.size(); i++)
+		{
+			for (int j = 0; j < createwa.size(); j++)
+			{
+				createwa[j]->allConditions.push_back(current->allConditions[i]);
+			}
+		}
 	}
 
 	std::vector<const Action*> path;

@@ -9,46 +9,58 @@ template<typename T>//Template pour le type des ressources, dans le cas d'utilis
 class World
 {	
 public:
-	World(const std::vector<std::string> variables)
+	World(const std::vector<std::string> variables = std::vector<std::string>(), const std::vector<T> initValue = std::vector<T>())
 	{
-		this->m_mapValue.reserve(variables.size());
+		m_mapValue.reserve(variables.size());
 		for(int i = 0; i < variables.size(); i++)
 		{
-			this->m_mapValue.insert(variables[i], T());
+			m_mapValue[variables[i]] = initValue.size() > i ? initValue[i]: T();
 		}
 	}
 	World(const World<T>* const world)
 	{
-		this->m_mapValue.reserve(world->m_mapValue.size());
-		this->m_mapValue = world->m_mapValue;
-		this->m_cost = world->m_cost;
+		m_mapValue.reserve(world->m_mapValue.size());
+		m_mapValue = world->m_mapValue;
+		m_cost = world->m_cost;
 	}
 	~World()
 	{
-		this->m_mapValue.clear();
+		m_mapValue.clear();
 	}
-	void SetRessource(const std::string ressource, T value)
-	{
-		this->m_mapValue.insert(ressource, value);
+	void ModifyRessource(std::string ressource, T value)
+	{		
+		m_mapValue[ressource] += value;
 	}
-	T GetRessource(const std::string ressource) const
+	T GetRessource(std::string ressource)
 	{
-		return this->m_mapValue[ressource];
+		return m_mapValue[ressource];
 	}
 	void AddCost(const unsigned short cost)
 	{
-		m_cost = cost;
+		m_cost += cost;
 	}
 	unsigned short GetCost() const
 	{
 		return m_cost;
 	}
-	void ClearCost() const
+	void ClearCost()
 	{
 		m_cost = 0;
 	}
+	void AddRessource(std::string ressource,T value = T())
+	{
+		m_mapValue[ressource] = value;		
+	}
+	void Print() const
+	{
+		for (const auto& pair : m_mapValue)
+		{
+			std::cout << "Ressource: " << pair.first << ", Valeur: " << pair.second << std::endl;
+		}
+		std::cout << "Cost: " << m_cost << std::endl;
+	}
 private:
-	std::unordered_map<const std::string, T> m_mapValue;
+	std::unordered_map<std::string, T> m_mapValue;
 	unsigned short m_cost = 0;
 };
 

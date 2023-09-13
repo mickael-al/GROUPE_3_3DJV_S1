@@ -32,7 +32,7 @@ Modifier Effect::GetModifier() const
 
 void Effect::ExecuteEffect(World<float> * const world) const
 {	
-	world->SetRessource(this->m_ressource, m_modifier == Modifier::ADD ? this->m_value : -this->m_value);
+	world->ModifyRessource(this->m_ressource, m_modifier == Modifier::ADD ? this->m_value : -this->m_value);
 	this->Execute();
 }
 
