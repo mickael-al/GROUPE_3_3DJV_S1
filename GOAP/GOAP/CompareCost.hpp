@@ -5,19 +5,18 @@
 
 struct CompareCost
 {
-	bool operator()(const WorldAction* const a, const WorldAction* const b)
+	bool operator()(const ActionCost* const a, const ActionCost* const b)
 	{
-		return a->world->GetCost() > b->world->GetCost();
+		return a->m_cost > b->m_cost;
 	}
 };
 
 struct CompareCondition
 {
-	bool operator()(const WorldAction* const a, const WorldAction* const b)
+	bool operator()(const ActionCost* const a, const ActionCost* const b)
 	{
 		return a->allConditions.size() > b->allConditions.size();
 	}
 };
-
 
 #endif //!__COMPARE_COST__

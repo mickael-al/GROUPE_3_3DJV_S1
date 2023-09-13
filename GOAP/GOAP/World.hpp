@@ -20,8 +20,7 @@ public:
 	World(const World<T>* const world)
 	{
 		m_mapValue.reserve(world->m_mapValue.size());
-		m_mapValue = world->m_mapValue;
-		m_cost = world->m_cost;
+		m_mapValue = world->m_mapValue;		
 	}
 	~World()
 	{
@@ -35,18 +34,6 @@ public:
 	{
 		return m_mapValue[ressource];
 	}
-	void AddCost(const unsigned short cost)
-	{
-		m_cost += cost;
-	}
-	unsigned short GetCost() const
-	{
-		return m_cost;
-	}
-	void ClearCost()
-	{
-		m_cost = 0;
-	}
 	void AddRessource(std::string ressource,T value = T())
 	{
 		m_mapValue[ressource] = value;		
@@ -57,11 +44,9 @@ public:
 		{
 			std::cout << "Ressource: " << pair.first << ", Valeur: " << pair.second << std::endl;
 		}
-		std::cout << "Cost: " << m_cost << std::endl;
 	}
 private:
 	std::unordered_map<std::string, T> m_mapValue;
-	unsigned short m_cost = 0;
 };
 
 #endif //!__WORLD__

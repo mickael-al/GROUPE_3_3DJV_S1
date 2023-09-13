@@ -58,11 +58,7 @@ void GoapManager::CalculateResolver() const
 						((cond == Condition::SUP || cond == Condition::SUP_EQUALS) && local_effects[j]->GetModifier() == Modifier::ADD) ||
 						(cond == Condition::DIFF || cond == Condition::EQUALS))
 					{
-						float f;
-						for (int i = 0; i < precondition[p]->GetValue(); i++)
-						{
-							effect_to_actions.push_back(m_allActions[i]);
-						}
+						effect_to_actions.push_back(m_allActions[i]);
 					}
 
 				}
@@ -92,56 +88,95 @@ std::vector<const Action*> GoapManager::Resolve() const//reverse AStar
 		return std::vector<const Action*>();
 	}
 
-	std::priority_queue<WorldAction*, std::vector<WorldAction*>, CompareCondition> openWorlds;//definie une priorité sur les couts des monde generer par les actions	
-	WorldAction* current = nullptr;
+	std::priority_queue<ActionCost*, std::vector<ActionCost*>, CompareCondition> openNode;//definie une priorité sur les couts des monde generer par les actions	
+	ActionCost* current = nullptr;
 	std::vector<PreCondition<float>*> conditions;
+	std::vector<ActionCost*> m_allac;
 	std::vector<const Action*> actions_resolve;
 	std::vector<const Effect*> action_effects;
-	WorldAction* firstWorldAction = new WorldAction();
+	ActionCost* firstActionCost = new ActionCost();
 	std::vector<WorldAction*> allWorldAction;	
-	allWorldAction.reserve(100);
 
-	firstWorldAction->action = m_objectifs[0];
-	firstWorldAction->world = m_world;
-	firstWorldAction->parent = nullptr;
-	openWorlds.push(firstWorldAction);	
-	m_world->ClearCost();	
+	WorldAction* firstwa = new WorldAction();
+	firstwa->action = m_objectifs[0];
+	firstwa->world = m_world;
 
-	while (!openWorlds.empty())
+	allWorldAction.push_back(firstwa);
+
+	firstActionCost->action = m_objectifs[0];	
+	firstActionCost->m_cost = 0;
+
+	openNode.push(firstActionCost);
+	
+	while (!openNode.empty())
 	{
-		current = openWorlds.top();		
-		openWorlds.pop();
-
-		allWorldAction.push_back(current);
-		current->world->Print();
+		current = openNode.top();
+		bool checkCond = true;
 		conditions = current->action->GetPreConditions();
-		for (int i = 0; i < conditions.size(); i++)
+		for (int i = 0; i < conditions.size() && checkCond; i++)
 		{
-			if (!conditions[i]->CheckPreCondition(current->world))
+			if (!conditions[i]->CheckPreCondition(allWorldAction[allWorldAction.size() - 1]->world))
 			{
-				current->allConditions.push_back(conditions[i]);
+				checkCond = false;
 			}
 		}
+		if (checkCond)
+		{
+			openNode.pop();
+			WorldAction* wa = new WorldAction();
+			wa->action = current->action;
+			wa->world = new World<float>(allWorldAction[allWorldAction.size() - 1]->world);
+			action_effects = wa->action->GetEffects();
+			for (int i = 0; i < action_effects.size(); i++)
+			{				
+				action_effects[i]->ExecuteEffect(wa->world);
+			}
+			allWorldAction.push_back(wa);	
+			if (firstActionCost == current)
+			{
+				break;
+			}
+			m_allac.push_back(current);
+		}
 		
+		std::vector<ActionCost*> actionC;
+		for (int i = 0; i < conditions.size(); i++)
+		{
+			if (!conditions[i]->CheckPreCondition(allWorldAction[allWorldAction.size()-1]->world))
+			{
+				current->allConditions.push_back(conditions[i]);
+				actions_resolve = conditions[i]->GetResolver();
+				for (int j = 0; j < actions_resolve.size(); j++)
+				{
+					ActionCost* wa = new ActionCost();
+					wa->action = actions_resolve[j];
+					actionC.push_back(wa);
+					openNode.push(wa);
+				}
+			}
+		}
+		for (int i = 0; i < actionC.size(); i++)
+		{
+			for (int j = 0; j < current->allConditions.size(); j++)
+			{
+				actionC[i]->allConditions.push_back(current->allConditions[j]);
+			}
+		}
 	}
 
 	std::vector<const Action*> path;
-	while (current != nullptr)
+	for (int i = 1; i < allWorldAction.size(); i++)
 	{
-		path.push_back(current->action);
-		current = current->parent;
-	}
-
-	assert(!path.empty() && "Aucun chemin trouvé.");
-
-	current = allWorldAction[0];
-	allWorldAction.erase(allWorldAction.begin());
-	delete current;
-	for (int i = 0; i < allWorldAction.size(); i++)
-	{
+		path.push_back(allWorldAction[i]->action);
 		delete allWorldAction[i]->world;
 		delete allWorldAction[i];
 	}
+	for (int i = 1; i < m_allac.size(); i++)
+	{
+		delete m_allac[i];
+	}
+
+	assert(!path.empty() && "Aucun chemin trouvé.");
 	
 	return path;
 }

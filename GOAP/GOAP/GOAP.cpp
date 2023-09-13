@@ -13,28 +13,50 @@ int main()
 	std::vector<Action*> allActions;
 	std::vector<Action*> objActions;
 
-	allActions.push_back(new Action("Construire une Maison",2));
-	allActions.push_back(new Action("Couper du bois", 2));
-	allActions.push_back(new Action("Construire une Hache", 2));
+	allActions.push_back(new Action("Construire une Maison", 1));
+	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Bois", Condition::SUP_EQUALS, 10));
+	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Pierre", Condition::SUP_EQUALS, 10));
+	allActions[allActions.size() - 1]->AddEffect(new Effect("Maison", Modifier::ADD, 1));
+	allActions[allActions.size() - 1]->AddEffect(new Effect("Bois", Modifier::SUB, 10));
+	allActions[allActions.size() - 1]->AddEffect(new Effect("Pierre", Modifier::SUB, 10));
+
+	allActions.push_back(new Action("Couper du bois", 1));
+	allActions[allActions.size()-1]->AddEffect(new Effect("Bois", Modifier::ADD, 1));
+
+	allActions.push_back(new Action("Miner de la pierre", 1));
+	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Pioche", Condition::SUP_EQUALS, 1));
+	allActions[allActions.size() - 1]->AddEffect(new Effect("Pierre", Modifier::ADD, 2));
+
+	allActions.push_back(new Action("Couper du bois avec une hache", 1));
+	allActions[allActions.size() - 1]->AddEffect(new Effect("Bois", Modifier::ADD, 2));
+	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Hache", Condition::SUP_EQUALS, 1));
+
+	allActions.push_back(new Action("Construire une Hache", 1));	
+	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Bois", Condition::SUP_EQUALS, 2));
+	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Craft", Condition::SUP_EQUALS, 1));
+	allActions[allActions.size() - 1]->AddEffect(new Effect("Hache", Modifier::ADD, 1));
+	allActions[allActions.size() - 1]->AddEffect(new Effect("Bois", Modifier::SUB, 2));
+
+	allActions.push_back(new Action("Construire une Pioche", 1));
+	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Bois", Condition::SUP_EQUALS, 2));
+	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Craft", Condition::SUP_EQUALS, 1));
+	allActions[allActions.size() - 1]->AddEffect(new Effect("Pioche", Modifier::ADD, 1));
+	allActions[allActions.size() - 1]->AddEffect(new Effect("Bois", Modifier::SUB, 2));
+
+	allActions.push_back(new Action("Construire une table de craft", 1));
+	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Bois", Condition::SUP_EQUALS, 1));
+	allActions[allActions.size() - 1]->AddEffect(new Effect("Craft", Modifier::ADD, 1));
+	allActions[allActions.size() - 1]->AddEffect(new Effect("Bois", Modifier::SUB, 1));
+
 	objActions.push_back(allActions[0]);
-
-	allActions[0]->AddPreCondition(new PreCondition<float>("Bois", Condition::SUP_EQUALS, 10));
-	allActions[1]->AddPreCondition(new PreCondition<float>("Hache", Condition::SUP_EQUALS, 1));
-	allActions[2]->AddPreCondition(new PreCondition<float>("Pierre", Condition::SUP_EQUALS, 3));
-
-	allActions[0]->AddEffect(new Effect("Maison", Modifier::ADD, 1));
-	allActions[0]->AddEffect(new Effect("Bois", Modifier::SUB, 10));
-
-	allActions[1]->AddEffect(new Effect("Bois", Modifier::ADD, 1));
-
-	allActions[2]->AddEffect(new Effect("Hache", Modifier::ADD, 1));
-	allActions[2]->AddEffect(new Effect("Pierre", Modifier::SUB, 3));
-
+	
 	World<float>* world = new World<float>();
 	world->AddRessource("Maison", 0);
 	world->AddRessource("Bois", 0);
 	world->AddRessource("Hache", 0);	
-	world->AddRessource("Pierre", 3);
+	world->AddRessource("Pioche", 0);
+	world->AddRessource("Craft", 0);
+	world->AddRessource("Pierre", 0);
 
 	GoapManager * goap = new GoapManager(world, allActions, objActions);
 
