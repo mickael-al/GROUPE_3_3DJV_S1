@@ -1,8 +1,16 @@
 ﻿  GOAP.cpp
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GOAP.cpp(35,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GOAP.cpp(41,20): warning C4018: '<' : incompatibilité signed/unsigned
 C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\World.hpp(15,20): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\World.hpp(12): message : pendant la compilation de la fonction membre classe modèle 'World<float>::World(const std::vector<std::string,std::allocator<std::string>>,const std::vector<float,std::allocator<float>>)'
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GOAP.cpp(30): message : voir la référence à l'instanciation de la fonction modèle 'World<float>::World(const std::vector<std::string,std::allocator<std::string>>,const std::vector<float,std::allocator<float>>)' en cours de compilation
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GOAP.cpp(30): message : voir la référence à l'instanciation classe modèle 'World<float>' en cours de compilation
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\World.hpp(12): message : pendant la compilation de la fonction membre classe modèle 'World<float>::World(const std::vector<std::string,std::allocator<std::string>>,const std::vector<T,std::allocator<T>>)'
+          with
+          [
+              T=float
+          ]
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GOAP.cpp(31): message : voir la référence à l'instanciation de la fonction modèle 'World<float>::World(const std::vector<std::string,std::allocator<std::string>>,const std::vector<T,std::allocator<T>>)' en cours de compilation
+          with
+          [
+              T=float
+          ]
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GOAP.cpp(31): message : voir la référence à l'instanciation classe modèle 'World<float>' en cours de compilation
 C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\World.hpp(17,48): warning C4018: '>' : incompatibilité signed/unsigned
   GOAP.vcxproj -> C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\Debug\GOAP.exe
