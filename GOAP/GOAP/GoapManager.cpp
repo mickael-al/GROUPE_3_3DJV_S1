@@ -58,7 +58,11 @@ void GoapManager::CalculateResolver() const
 						((cond == Condition::SUP || cond == Condition::SUP_EQUALS) && local_effects[j]->GetModifier() == Modifier::ADD) ||
 						(cond == Condition::DIFF || cond == Condition::EQUALS))
 					{
-						effect_to_actions.push_back(m_allActions[i]);
+						float f;
+						for (int i = 0; i < precondition[p]->GetValue(); i++)
+						{
+							effect_to_actions.push_back(m_allActions[i]);
+						}
 					}
 
 				}
@@ -88,7 +92,7 @@ std::vector<const Action*> GoapManager::Resolve() const//reverse AStar
 		return std::vector<const Action*>();
 	}
 
-	std::priority_queue<WorldAction*, std::vector<WorldAction*>, CompareCost> openWorlds;//definie une priorité sur les couts des monde generer par les actions	
+	std::priority_queue<WorldAction*, std::vector<WorldAction*>, CompareCondition> openWorlds;//definie une priorité sur les couts des monde generer par les actions	
 	WorldAction* current = nullptr;
 	std::vector<PreCondition<float>*> conditions;
 	std::vector<const Action*> actions_resolve;
@@ -109,48 +113,16 @@ std::vector<const Action*> GoapManager::Resolve() const//reverse AStar
 		openWorlds.pop();
 
 		allWorldAction.push_back(current);
-		//current->world->Print();
+		current->world->Print();
 		conditions = current->action->GetPreConditions();
 		for (int i = 0; i < conditions.size(); i++)
 		{
-			current->allConditions.push_back(conditions[i]);
-		}
-		std::vector<WorldAction*> createwa;
-		for (int i = 0; i < current->allConditions.size(); i++)
-		{			
-			if (!current->allConditions[i]->CheckPreCondition(current->world))
+			if (!conditions[i]->CheckPreCondition(current->world))
 			{
-				actions_resolve = current->allConditions[i]->GetResolver();
-				assert(!actions_resolve.empty() && "Aucune action de résolution trouvée.");
-				for (int j = 0; j < actions_resolve.size(); j++)
-				{
-					WorldAction* nwa = new WorldAction();
-					nwa->action = actions_resolve[j];
-					nwa->world = new World<float>(current->world);
-					nwa->world->AddCost(nwa->action->GetCost());
-					action_effects = nwa->action->GetEffects();
-					for (int a = 0; a < action_effects.size(); a++)
-					{
-						action_effects[a]->ExecuteEffect(nwa->world);
-					}
-					nwa->parent = current;
-					openWorlds.push(nwa);
-					createwa.push_back(nwa);
-				}
-			}	
-			else
-			{
-				current->allConditions.erase(current->allConditions.begin() + i);
-				i--;				
+				current->allConditions.push_back(conditions[i]);
 			}
 		}
-		for (int i = 0; i < current->allConditions.size(); i++)
-		{
-			for (int j = 0; j < createwa.size(); j++)
-			{
-				createwa[j]->allConditions.push_back(current->allConditions[i]);
-			}
-		}
+		
 	}
 
 	std::vector<const Action*> path;

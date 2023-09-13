@@ -11,5 +11,13 @@ struct CompareCost
 	}
 };
 
+struct CompareCondition
+{
+	bool operator()(const WorldAction* const a, const WorldAction* const b)
+	{
+		return a->allConditions.size() > b->allConditions.size();
+	}
+};
+
 
 #endif //!__COMPARE_COST__

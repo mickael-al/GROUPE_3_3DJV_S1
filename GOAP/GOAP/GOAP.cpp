@@ -20,18 +20,22 @@ int main()
 
 	allActions[0]->AddPreCondition(new PreCondition<float>("Bois", Condition::SUP_EQUALS, 10));
 	allActions[1]->AddPreCondition(new PreCondition<float>("Hache", Condition::SUP_EQUALS, 1));
-	allActions[2]->AddPreCondition(new PreCondition<float>("Bois", Condition::SUP_EQUALS, 3));
+	allActions[2]->AddPreCondition(new PreCondition<float>("Pierre", Condition::SUP_EQUALS, 3));
 
 	allActions[0]->AddEffect(new Effect("Maison", Modifier::ADD, 1));
 	allActions[0]->AddEffect(new Effect("Bois", Modifier::SUB, 10));
+
 	allActions[1]->AddEffect(new Effect("Bois", Modifier::ADD, 1));
+
 	allActions[2]->AddEffect(new Effect("Hache", Modifier::ADD, 1));
-	allActions[2]->AddEffect(new Effect("Bois", Modifier::SUB, 3));
+	allActions[2]->AddEffect(new Effect("Pierre", Modifier::SUB, 3));
 
 	World<float>* world = new World<float>();
 	world->AddRessource("Maison", 0);
-	world->AddRessource("Bois", 3);
+	world->AddRessource("Bois", 0);
 	world->AddRessource("Hache", 0);	
+	world->AddRessource("Pierre", 3);
+
 	GoapManager * goap = new GoapManager(world, allActions, objActions);
 
 	auto t0 = Time::now();

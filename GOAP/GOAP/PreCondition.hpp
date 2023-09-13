@@ -74,6 +74,11 @@ public:
 	{
 		return m_resolver;
 	}
+
+	T GetValue() const
+	{
+		return m_value;
+	}
 private:
 	std::string m_ressource;
 	Condition m_condition;
