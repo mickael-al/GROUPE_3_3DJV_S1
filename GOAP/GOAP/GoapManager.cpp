@@ -196,9 +196,6 @@ std::vector<const Action*> GoapManager::Resolve() const//reverse AStar
 			break;
 		}
 		path.push_back(finalAction->action);
-		std::cout << finalAction->action->GetName() << std::endl;
-		//finalAction->world->Print();
-		//std::cout << std::endl;
 		finalAction = finalAction->parent;
 	}
 
