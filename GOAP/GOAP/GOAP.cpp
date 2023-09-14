@@ -20,7 +20,8 @@ int main()
 	allActions[allActions.size() - 1]->AddEffect(new Effect("Bois", Modifier::SUB, 10));
 	allActions[allActions.size() - 1]->AddEffect(new Effect("Pierre", Modifier::SUB, 10));
 
-	allActions.push_back(new Action("Couper du bois", 1));
+	allActions.push_back(new Action("Couper du bois", 2));
+	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Hache", Condition::INF_EQUALS, 0));
 	allActions[allActions.size()-1]->AddEffect(new Effect("Bois", Modifier::ADD, 1));
 
 	allActions.push_back(new Action("Miner de la pierre", 1));
@@ -64,11 +65,11 @@ int main()
 
 	std::vector<const Action*> path = goap->Resolve();
 	std::string allPath = "";
-	for (int i = 0; i < path.size(); i++)
+	for (int i = path.size()-1; i >= 0; i--)
 	{
 		allPath += path[i]->GetName() + "\n";
 	}
-	std::cout << allPath << std::endl;
+	//std::cout << allPath << std::endl;
 
 	auto t1 = Time::now();
 	fsec fs = t1 - t0;

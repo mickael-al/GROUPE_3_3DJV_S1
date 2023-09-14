@@ -3,20 +3,17 @@
 
 #include "PreCondition.hpp"
 #include "World.hpp"
+#include <vector>
 
 class Action;
 
-struct ActionCost
-{
-	const Action* action;
-	std::vector<PreCondition<float>*> allConditions;
-	unsigned short m_cost = 0;
-};
-
 struct WorldAction
 {
+	std::vector<const Action*> openNode;
 	const Action* action;
 	World<float> * world;
+	WorldAction* parent;
+	unsigned short cost = 0;
 };
 
 #endif //!__WORLD_ACTION__

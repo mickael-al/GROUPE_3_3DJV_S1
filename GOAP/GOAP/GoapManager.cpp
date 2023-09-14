@@ -26,6 +26,14 @@ GoapManager::~GoapManager()
 
 }
 
+std::vector<const Action *> copyVecFast(const std::vector<const Action*>& original) 
+{ 
+	std::vector<const Action*> newVec;   
+	newVec.reserve(original.size());   
+	std::copy(original.begin(), original.end(), std::back_inserter(newVec)); 
+	return newVec; 
+}
+
 void GoapManager::CalculateResolver() const
 {
 	std::vector<PreCondition<float>*> precondition;
@@ -88,84 +96,90 @@ std::vector<const Action*> GoapManager::Resolve() const//reverse AStar
 		return std::vector<const Action*>();
 	}
 
-	std::priority_queue<ActionCost*, std::vector<ActionCost*>, CompareCondition> openNode;//definie une priorité sur les couts des monde generer par les actions	
-	ActionCost* current = nullptr;
+	std::priority_queue<WorldAction*, std::vector<WorldAction*>, CompareCost> openWorldAction;
+	const Action* current = nullptr;
+	WorldAction* currentWorldAction = nullptr;
 	std::vector<PreCondition<float>*> conditions;
-	std::vector<ActionCost*> m_allac;
 	std::vector<const Action*> actions_resolve;
 	std::vector<const Effect*> action_effects;
-	ActionCost* firstActionCost = new ActionCost();
-	std::vector<WorldAction*> allWorldAction;	
-
 	WorldAction* firstwa = new WorldAction();
+
+	firstwa->openNode.push_back(m_objectifs[0]);	
 	firstwa->action = m_objectifs[0];
-	firstwa->world = m_world;
-
-	allWorldAction.push_back(firstwa);
-
-	firstActionCost->action = m_objectifs[0];	
-	firstActionCost->m_cost = 0;
-
-	openNode.push(firstActionCost);
+	firstwa->world = new World<float>(m_world);
+	firstwa->cost = 0.0f;
 	
-	while (!openNode.empty())
-	{
-		current = openNode.top();
-		bool checkCond = true;
-		conditions = current->action->GetPreConditions();
-		for (int i = 0; i < conditions.size() && checkCond; i++)
+	openWorldAction.push(firstwa);
+	WorldAction* finalAction = nullptr;
+	while (!openWorldAction.empty() && finalAction == nullptr)
+	{		
+		currentWorldAction = openWorldAction.top();
+		bool popCurrentWorld = false;
+		std::vector<const Action*> m_action_allready_add;
+		for (int curindex = 0; curindex < currentWorldAction->openNode.size(); curindex++)
 		{
-			if (!conditions[i]->CheckPreCondition(allWorldAction[allWorldAction.size() - 1]->world))
+			current = currentWorldAction->openNode[curindex];
+			conditions = current->GetPreConditions();
+			bool checkCond = true;
+			for (int i = 0; i < conditions.size() && checkCond; i++)
 			{
-				checkCond = false;
-			}
-		}
-		if (checkCond)
-		{
-			openNode.pop();
-			WorldAction* wa = new WorldAction();
-			wa->action = current->action;
-			wa->world = new World<float>(allWorldAction[allWorldAction.size() - 1]->world);
-			action_effects = wa->action->GetEffects();
-			for (int i = 0; i < action_effects.size(); i++)
-			{				
-				action_effects[i]->ExecuteEffect(wa->world);
-			}
-			allWorldAction.push_back(wa);	
-			if (firstActionCost == current)
-			{
-				break;
-			}
-			m_allac.push_back(current);
-		}
-		
-		std::vector<ActionCost*> actionC;
-		for (int i = 0; i < conditions.size(); i++)
-		{
-			if (!conditions[i]->CheckPreCondition(allWorldAction[allWorldAction.size()-1]->world))
-			{
-				current->allConditions.push_back(conditions[i]);
-				actions_resolve = conditions[i]->GetResolver();
-				for (int j = 0; j < actions_resolve.size(); j++)
+				if (!conditions[i]->CheckPreCondition(currentWorldAction->world))
 				{
-					ActionCost* wa = new ActionCost();
-					wa->action = actions_resolve[j];
-					actionC.push_back(wa);
-					openNode.push(wa);
+					checkCond = false;
+					actions_resolve = conditions[i]->GetResolver();
+					for (int j = 0; j < actions_resolve.size(); j++)
+					{
+						bool isInOpenNode = false;
+						for (int s = 0; s < currentWorldAction->openNode.size() && !isInOpenNode; s++)
+						{
+							if (currentWorldAction->openNode[s] == actions_resolve[j])
+							{
+								isInOpenNode = true;
+							}
+						}
+						if (!isInOpenNode)
+						{
+							currentWorldAction->openNode.push_back(actions_resolve[j]);
+						}
+					}							
 				}
 			}
-		}
-		for (int i = 0; i < actionC.size(); i++)
-		{
-			for (int j = 0; j < current->allConditions.size(); j++)
+			if (checkCond)
 			{
-				actionC[i]->allConditions.push_back(current->allConditions[j]);
-			}
-		}
+				if (!popCurrentWorld)
+				{
+					openWorldAction.pop();
+					popCurrentWorld = true;
+				}
+				currentWorldAction->openNode.erase(currentWorldAction->openNode.begin() + curindex);
+				curindex--;
+				
+				if (std::find(m_action_allready_add.begin(), m_action_allready_add.end(), current) == m_action_allready_add.end())
+				{
+					WorldAction* wa = new WorldAction();
+					wa->action = current;
+					wa->openNode = copyVecFast(currentWorldAction->openNode);
+					wa->parent = currentWorldAction;
+					wa->world = new World<float>(currentWorldAction->world);
+					wa->cost += current->GetCost() + currentWorldAction->cost;
+					action_effects = current->GetEffects();
+					m_action_allready_add.push_back(current);					
+					for (int i = 0; i < action_effects.size(); i++)
+					{
+						action_effects[i]->ExecuteEffect(wa->world);
+					}
+					openWorldAction.push(wa);					
+					if (firstwa->action == wa->action)
+					{
+						finalAction = wa;
+					}
+				}
+			}		
+		}		
 	}
 
 	std::vector<const Action*> path;
-	for (int i = 1; i < allWorldAction.size(); i++)
+	/*for (int i = 1; i < allWorldAction.size(); i++)
 	{
 		path.push_back(allWorldAction[i]->action);
 		delete allWorldAction[i]->world;
@@ -174,6 +188,18 @@ std::vector<const Action*> GoapManager::Resolve() const//reverse AStar
 	for (int i = 1; i < m_allac.size(); i++)
 	{
 		delete m_allac[i];
+	}*/
+	while (finalAction != nullptr)
+	{
+		if (finalAction->parent == nullptr)
+		{
+			break;
+		}
+		path.push_back(finalAction->action);
+		std::cout << finalAction->action->GetName() << std::endl;
+		//finalAction->world->Print();
+		//std::cout << std::endl;
+		finalAction = finalAction->parent;
 	}
 
 	assert(!path.empty() && "Aucun chemin trouvé.");
