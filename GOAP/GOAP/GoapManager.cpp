@@ -7,12 +7,26 @@
 #include <queue>
 #include <algorithm>
 
-GoapManager::GoapManager(World<float> * const world, std::vector<Action*> allActions, std::vector<Action*> objectifs)
+GoapManager::GoapManager(World<float> * const world, std::vector<Action*> & allActions, std::vector<Action*> & objectifs)
 {
 	m_allActions = allActions;
 	m_objectifs = objectifs;
 	m_world = world;
-	//assert(false && "Objectif n'est pas dans action");
+	for (int i = 0; i < m_objectifs.size(); i++)
+	{
+		bool isExist = false;
+		for (int j = 0; j < m_allActions.size() && !isExist; j++)
+		{
+			if (m_allActions[j] == m_objectifs[i])
+			{
+				isExist = true;
+			}
+		}
+		if (!isExist)
+		{
+			assert(false && "Objectif n'est pas dans action");
+		}
+	}	
 	CalculateResolver();
 }
 
@@ -24,14 +38,6 @@ GoapManager::GoapManager(const GoapManager* const goapManager)
 GoapManager::~GoapManager()
 {
 
-}
-
-std::vector<const Action *> copyVecFast(const std::vector<const Action*>& original) 
-{ 
-	std::vector<const Action*> newVec;   
-	newVec.reserve(original.size());   
-	std::copy(original.begin(), original.end(), std::back_inserter(newVec)); 
-	return newVec; 
 }
 
 void GoapManager::CalculateResolver() const
@@ -95,7 +101,6 @@ std::vector<const Action*> GoapManager::Resolve() const//reverse AStar
 		assert(false && "Aucun objectif à résoudre.");
 		return std::vector<const Action*>();
 	}
-
 	std::priority_queue<WorldAction*, std::vector<WorldAction*>, CompareCost> openWorldAction;
 	const Action* current = nullptr;
 	WorldAction* currentWorldAction = nullptr;
@@ -103,7 +108,9 @@ std::vector<const Action*> GoapManager::Resolve() const//reverse AStar
 	std::vector<const Action*> actions_resolve;
 	std::vector<const Effect*> action_effects;
 	WorldAction* firstwa = new WorldAction();
-
+	
+	
+	std::vector<WorldAction*> worlActionRessource;
 	firstwa->openNode.push_back(m_objectifs[0]);	
 	firstwa->action = m_objectifs[0];
 	firstwa->world = new World<float>(m_world);
@@ -111,26 +118,31 @@ std::vector<const Action*> GoapManager::Resolve() const//reverse AStar
 	
 	openWorldAction.push(firstwa);
 	WorldAction* finalAction = nullptr;
+	WorldAction* wa = nullptr;
+	bool popCurrentWorld = false;
+	bool checkCond = false;
+	bool isInOpenNode = false;
+	int curindex, i, j, s;
 	while (!openWorldAction.empty() && finalAction == nullptr)
 	{		
 		currentWorldAction = openWorldAction.top();
-		bool popCurrentWorld = false;
-		std::vector<const Action*> m_action_allready_add;
-		for (int curindex = 0; curindex < currentWorldAction->openNode.size(); curindex++)
+		popCurrentWorld = false;
+		std::vector<const Action*> action_allready_add;
+		for (curindex = 0; curindex < currentWorldAction->openNode.size(); curindex++)
 		{
 			current = currentWorldAction->openNode[curindex];
 			conditions = current->GetPreConditions();
-			bool checkCond = true;
-			for (int i = 0; i < conditions.size() && checkCond; i++)
+			checkCond = true;
+			for (i = 0; i < conditions.size() && checkCond; i++)
 			{
 				if (!conditions[i]->CheckPreCondition(currentWorldAction->world))
 				{
 					checkCond = false;
 					actions_resolve = conditions[i]->GetResolver();
-					for (int j = 0; j < actions_resolve.size(); j++)
+					for (j = 0; j < actions_resolve.size(); j++)
 					{
-						bool isInOpenNode = false;
-						for (int s = 0; s < currentWorldAction->openNode.size() && !isInOpenNode; s++)
+						isInOpenNode = false;
+						for (s = 0; s < currentWorldAction->openNode.size() && !isInOpenNode; s++)
 						{
 							if (currentWorldAction->openNode[s] == actions_resolve[j])
 							{
@@ -154,21 +166,29 @@ std::vector<const Action*> GoapManager::Resolve() const//reverse AStar
 				currentWorldAction->openNode.erase(currentWorldAction->openNode.begin() + curindex);
 				curindex--;
 				
-				if (std::find(m_action_allready_add.begin(), m_action_allready_add.end(), current) == m_action_allready_add.end())
+				isInOpenNode = false;
+				for (s = 0; s < action_allready_add.size() && !isInOpenNode; s++)
 				{
-					WorldAction* wa = new WorldAction();
+					if (action_allready_add[s] == current)
+					{
+						isInOpenNode = true;
+					}
+				}
+				if (!isInOpenNode)//optimize recherche remove double action
+				{
+					wa = new WorldAction();
 					wa->action = current;
-					wa->openNode = copyVecFast(currentWorldAction->openNode);
+					wa->openNode = currentWorldAction->openNode;
 					wa->parent = currentWorldAction;
 					wa->world = new World<float>(currentWorldAction->world);
 					wa->cost += current->GetCost() + currentWorldAction->cost;
 					action_effects = current->GetEffects();
-					m_action_allready_add.push_back(current);					
+					action_allready_add.push_back(current);
 					for (int i = 0; i < action_effects.size(); i++)
 					{
 						action_effects[i]->ExecuteEffect(wa->world);
 					}
-					openWorldAction.push(wa);					
+					openWorldAction.push(wa);			
 					if (firstwa->action == wa->action)
 					{
 						finalAction = wa;
@@ -179,16 +199,6 @@ std::vector<const Action*> GoapManager::Resolve() const//reverse AStar
 	}
 
 	std::vector<const Action*> path;
-	/*for (int i = 1; i < allWorldAction.size(); i++)
-	{
-		path.push_back(allWorldAction[i]->action);
-		delete allWorldAction[i]->world;
-		delete allWorldAction[i];
-	}
-	for (int i = 1; i < m_allac.size(); i++)
-	{
-		delete m_allac[i];
-	}*/
 	while (finalAction != nullptr)
 	{
 		if (finalAction->parent == nullptr)
@@ -199,6 +209,12 @@ std::vector<const Action*> GoapManager::Resolve() const//reverse AStar
 		finalAction = finalAction->parent;
 	}
 
+	for (int i = 0; i < worlActionRessource.size(); i++)
+	{
+		delete worlActionRessource[i]->world;
+		delete worlActionRessource[i];
+	}
+	worlActionRessource.clear();
 	assert(!path.empty() && "Aucun chemin trouvé.");
 	
 	return path;

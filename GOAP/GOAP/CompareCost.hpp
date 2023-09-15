@@ -11,12 +11,4 @@ struct CompareCost
 	}
 };
 
-/*struct CompareCondition
-{
-	bool operator()(const ActionCost* const a, const ActionCost* const b)
-	{
-		return a->allConditions.size() > b->allConditions.size();
-	}
-};*/
-
 #endif //!__COMPARE_COST__

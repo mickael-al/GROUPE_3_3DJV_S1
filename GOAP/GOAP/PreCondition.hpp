@@ -33,12 +33,12 @@ public:
 
 	}
 
-	std::string GetRessource() const
+	const std::string & GetRessource() const
 	{
 		return m_ressource;
 	}
 
-	Condition GetCondition() const
+	const Condition & GetCondition() const
 	{
 		return m_condition;
 	}
@@ -66,11 +66,11 @@ public:
 
 		return false;
 	}	
-	void SetResolver(std::vector<const Action*> actions)
+	void SetResolver(std::vector<const Action*> & actions)
 	{
 		m_resolver = actions;			
 	}	
-	std::vector<const Action*> GetResolver() const
+	const std::vector<const Action*> & GetResolver() const
 	{
 		return m_resolver;
 	}

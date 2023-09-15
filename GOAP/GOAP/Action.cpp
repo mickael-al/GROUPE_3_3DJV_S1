@@ -1,6 +1,6 @@
 #include "Action.hpp"
 
-Action::Action(const std::string name, const unsigned short cost)
+Action::Action(const std::string & name, const unsigned short cost)
 {
 	this->m_name = name;
 	this->m_cost = cost;
@@ -17,11 +17,12 @@ Action::~Action()
 	this->m_effects.clear();
 }
 
-void Action::SetName(const std::string name)
+void Action::SetName(const std::string & name)
 {
 	this->m_name = name;
 }
-std::string Action::GetName() const
+
+const std::string & Action::GetName() const
 {
 	return this->m_name;
 }
@@ -29,7 +30,7 @@ void Action::AddPreCondition(PreCondition<float>* preCondition)
 {
 	this->m_preConditions.push_back(preCondition);
 }
-std::vector<PreCondition<float>*> Action::GetPreConditions() const
+const std::vector<PreCondition<float>*> & Action::GetPreConditions() const
 {
 	return this->m_preConditions;
 }
@@ -37,7 +38,8 @@ void Action::AddEffect(const Effect* effect)
 {
 	this->m_effects.push_back(effect);
 }
-std::vector<const Effect*> Action::GetEffects() const
+
+const std::vector<const Effect*> & Action::GetEffects() const
 {
 	return this->m_effects;
 }

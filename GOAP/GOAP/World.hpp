@@ -6,10 +6,10 @@
 #include <unordered_map>
 
 template<typename T>//Template pour le type des ressources, dans le cas d'utilisation de plusieurs type utiliser le void*  
-class World
+class World 
 {	
 public:
-	World(const std::vector<std::string> variables = std::vector<std::string>(), const std::vector<T> initValue = std::vector<T>())
+	World(const std::vector<std::string> & variables = std::vector<std::string>(), const std::vector<T> & initValue = std::vector<T>())
 	{
 		m_mapValue.reserve(variables.size());
 		for(int i = 0; i < variables.size(); i++)
@@ -30,7 +30,7 @@ public:
 	{		
 		m_mapValue[ressource] += value;
 	}
-	T GetRessource(std::string ressource)
+	const T & GetRessource(std::string ressource)
 	{
 		return m_mapValue[ressource];
 	}

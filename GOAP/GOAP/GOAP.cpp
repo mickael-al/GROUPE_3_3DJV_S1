@@ -49,8 +49,8 @@ int main()
 	allActions[allActions.size() - 1]->AddEffect(new Effect("Craft", Modifier::ADD, 1));
 	allActions[allActions.size() - 1]->AddEffect(new Effect("Bois", Modifier::SUB, 1));
 
-	objActions.push_back(allActions[0]);
-	
+	objActions.push_back(allActions[0]);	
+
 	World<float>* world = new World<float>();
 	world->AddRessource("Maison", 0);
 	world->AddRessource("Bois", 0);

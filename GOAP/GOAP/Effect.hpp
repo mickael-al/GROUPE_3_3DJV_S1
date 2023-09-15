@@ -9,11 +9,11 @@ enum Modifier;
 class Effect
 {
 public:
-	Effect(const std::string ressource,const Modifier mod,const float value);
+	Effect(const std::string & ressource,const Modifier mod,const float value);
 	Effect(const Effect * const effect);
 	~Effect();	
-	std::string GetRessource() const;
-	Modifier GetModifier() const;
+	const std::string & GetRessource() const;
+	const Modifier & GetModifier() const;
 	void ExecuteEffect(World<float> * const world) const;
 	virtual void Execute() const;
 private:

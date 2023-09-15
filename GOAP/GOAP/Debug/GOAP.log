@@ -1,11 +1,13 @@
-﻿  GOAP.cpp
+﻿  Action.cpp
+  Effect.cpp
+  GOAP.cpp
 C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\World.hpp(15,20): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\World.hpp(12): message : pendant la compilation de la fonction membre classe modèle 'World<float>::World(const std::vector<std::string,std::allocator<std::string>>,const std::vector<T,std::allocator<T>>)'
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\World.hpp(12): message : pendant la compilation de la fonction membre classe modèle 'World<float>::World(const std::vector<std::string,std::allocator<std::string>> &,const std::vector<T,std::allocator<T>> &)'
           with
           [
               T=float
           ]
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GOAP.cpp(54): message : voir la référence à l'instanciation de la fonction modèle 'World<float>::World(const std::vector<std::string,std::allocator<std::string>>,const std::vector<T,std::allocator<T>>)' en cours de compilation
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GOAP.cpp(54): message : voir la référence à l'instanciation de la fonction modèle 'World<float>::World(const std::vector<std::string,std::allocator<std::string>> &,const std::vector<T,std::allocator<T>> &)' en cours de compilation
           with
           [
               T=float
@@ -13,18 +15,22 @@ C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GOAP.cpp(54): mes
 C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GOAP.cpp(54): message : voir la référence à l'instanciation classe modèle 'World<float>' en cours de compilation
 C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\World.hpp(17,48): warning C4018: '>' : incompatibilité signed/unsigned
   GoapManager.cpp
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(41,20): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(44,21): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(53,20): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(56,21): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(59,22): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(78,20): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(82,21): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(110,18): warning C4244: '=' : conversion de 'float' en 'unsigned short', perte possible de données
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(119,35): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(124,22): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(130,24): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(133,25): warning C4018: '<' : incompatibilité signed/unsigned
-C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(167,24): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(15,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(18,21): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(47,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(50,21): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(59,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(62,21): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(65,22): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(84,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(88,21): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(117,18): warning C4244: '=' : conversion de 'float' en 'unsigned short', perte possible de données
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(131,31): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(136,18): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(142,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(145,21): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(170,19): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(187,24): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(212,20): warning C4018: '<' : incompatibilité signed/unsigned
   Génération de code en cours...
   GOAP.vcxproj -> C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\Debug\GOAP.exe

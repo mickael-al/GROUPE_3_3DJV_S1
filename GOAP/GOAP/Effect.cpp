@@ -1,7 +1,7 @@
 #include "Effect.hpp"
 #include "EnumModifier.hpp"
 
-Effect::Effect(const std::string ressource, const Modifier mod,const float value)
+Effect::Effect(const std::string & ressource, const Modifier mod,const float value)
 {
 	this->m_ressource = ressource;
 	this->m_modifier = mod;
@@ -20,19 +20,19 @@ Effect::~Effect()
 	this->m_ressource.clear();
 }
 
-std::string Effect::GetRessource() const
+const std::string & Effect::GetRessource() const
 {
 	return this->m_ressource;
 }
 
-Modifier Effect::GetModifier() const
+const Modifier & Effect::GetModifier() const
 {
 	return this->m_modifier;
 }
 
 void Effect::ExecuteEffect(World<float> * const world) const
 {	
-	world->ModifyRessource(this->m_ressource, m_modifier == Modifier::ADD ? this->m_value : -this->m_value);
+	world->ModifyRessource(m_ressource, m_modifier == Modifier::ADD ? this->m_value : -this->m_value);
 	this->Execute();
 }
 
