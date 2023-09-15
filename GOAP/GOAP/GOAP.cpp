@@ -107,7 +107,7 @@ int main()
 	objActions.push_back(allActions[1]);
 
 	World<float>* world = new World<float>();
-	world->AddRessource("Maison", 0);
+	/*world->AddRessource("Maison", 0);
 	world->AddRessource("Bois", 0);
 	world->AddRessource("Hache", 0);	
 	world->AddRessource("Pioche", 0);
@@ -119,7 +119,7 @@ int main()
 	world->AddRessource("Pioche en Pierre", 0);
 	world->AddRessource("Charbon", 0);
 	world->AddRessource("Diamant", 0);
-	world->AddRessource("Minerais de Fer", 0);
+	world->AddRessource("Minerais de Fer", 0);*/
 
 	GoapManager * goap = new GoapManager(world, allActions, objActions);
 
