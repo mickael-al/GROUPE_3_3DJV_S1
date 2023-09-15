@@ -32,6 +32,14 @@ int main()
 	allActions[allActions.size() - 1]->AddEffect(new Effect("Fer", Modifier::SUB, 3));
 	allActions[allActions.size() - 1]->AddEffect(new Effect("Bois", Modifier::SUB, 1));
 
+	allActions.push_back(new Action("Construire une Pioche en Fer", 1));
+	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Bois", Condition::SUP_EQUALS, 1));
+	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Fer", Condition::SUP_EQUALS, 3));
+	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Craft", Condition::SUP_EQUALS, 1));
+	allActions[allActions.size() - 1]->AddEffect(new Effect("Pioche en Fer", Modifier::ADD, 1));
+	allActions[allActions.size() - 1]->AddEffect(new Effect("Fer", Modifier::SUB, 3));
+	allActions[allActions.size() - 1]->AddEffect(new Effect("Bois", Modifier::SUB, 1));
+
 	allActions.push_back(new Action("Faire fondre du Fer", 1));
 	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Four", Condition::SUP_EQUALS, 1));
 	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Minerais de Fer", Condition::SUP_EQUALS, 1));
@@ -47,15 +55,20 @@ int main()
 	allActions[allActions.size() - 1]->AddEffect(new Effect("Four", Modifier::ADD, 1));
 
 	allActions.push_back(new Action("Couper du bois", 2));	
+	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Hache", Condition::INF, 1));
 	allActions[allActions.size()-1]->AddEffect(new Effect("Bois", Modifier::ADD, 1.0));
+
+	allActions.push_back(new Action("Couper du bois avec une hache", 1));
+	allActions[allActions.size() - 1]->AddEffect(new Effect("Bois", Modifier::ADD, 2));
+	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Hache", Condition::SUP_EQUALS, 1));
 
 	allActions.push_back(new Action("Miner de la pierre", 1));
 	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Pioche", Condition::SUP_EQUALS, 1));
 	allActions[allActions.size() - 1]->AddEffect(new Effect("Pierre", Modifier::ADD, 2));
 
-	allActions.push_back(new Action("Couper du bois avec une hache", 1));
-	allActions[allActions.size() - 1]->AddEffect(new Effect("Bois", Modifier::ADD, 2));
-	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Hache", Condition::SUP_EQUALS, 1));
+	allActions.push_back(new Action("Miner de la pierre avec une Pioche en Pierre", 1));
+	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Pioche en Pierre", Condition::SUP_EQUALS, 1));
+	allActions[allActions.size() - 1]->AddEffect(new Effect("Pierre", Modifier::ADD, 5));
 
 	allActions.push_back(new Action("Construire une Hache", 1));	
 	allActions[allActions.size() - 1]->AddPreCondition(new PreCondition<float>("Bois", Condition::SUP_EQUALS, 2));
@@ -111,19 +124,18 @@ int main()
 	GoapManager * goap = new GoapManager(world, allActions, objActions);
 
 	auto t0 = Time::now();
+	std::string allPath = "";	
 	for (int i = 0; i < objActions.size(); i++)
-	{
-		std::string allPath = "";
-		std::vector<const Action*> path = goap->Resolve();
-		
+	{		
+		std::vector<const Action*> path = goap->Resolve();		
 		for (int i = path.size() - 1; i >= 0; i--)
 		{
 			allPath += path[i]->GetName() + "\n";
-		}
-		std::cout << allPath << std::endl;
+		}		
 	}
 	auto t1 = Time::now();
 	fsec fs = t1 - t0;
+	std::cout << allPath << std::endl;
 	std::cout << fs.count() << "s\n";
 	delete goap;
 }

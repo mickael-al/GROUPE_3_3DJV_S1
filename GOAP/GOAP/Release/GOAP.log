@@ -1,0 +1,40 @@
+﻿  Action.cpp
+  Effect.cpp
+  GOAP.cpp
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GOAP.cpp(115,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\World.hpp(15,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\World.hpp(12): message : pendant la compilation de la fonction membre classe modèle 'World<float>::World(const std::vector<std::string,std::allocator<std::string>> &,const std::vector<T,std::allocator<T>> &)'
+          with
+          [
+              T=float
+          ]
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GOAP.cpp(97): message : voir la référence à l'instanciation de la fonction modèle 'World<float>::World(const std::vector<std::string,std::allocator<std::string>> &,const std::vector<T,std::allocator<T>> &)' en cours de compilation
+          with
+          [
+              T=float
+          ]
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GOAP.cpp(97): message : voir la référence à l'instanciation classe modèle 'World<float>' en cours de compilation
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\World.hpp(17,48): warning C4018: '>' : incompatibilité signed/unsigned
+  GoapManager.cpp
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(15,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(18,21): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(47,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(50,21): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(60,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(63,21): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(66,22): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(85,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(89,21): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(118,18): warning C4244: '=' : conversion de 'float' en 'unsigned short', perte possible de données
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(133,31): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(138,18): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(144,20): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(147,21): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(172,19): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(189,24): warning C4018: '<' : incompatibilité signed/unsigned
+C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\GOAP\GoapManager.cpp(217,20): warning C4018: '<' : incompatibilité signed/unsigned
+  Génération de code en cours
+  Previous IPDB not found, fall back to full compilation.
+  All 775 functions were compiled because no usable IPDB/IOBJ from previous compilation was found.
+  Fin de la génération du code
+  GOAP.vcxproj -> C:\Users\micka\Documents\Projet\Cpp\GROUPE_3_3DJV_S1\GOAP\Release\GOAP.exe

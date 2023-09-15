@@ -7,7 +7,7 @@ struct CompareCost
 {
 	bool operator()(const WorldAction* const a, const WorldAction* const b)
 	{
-		return a->cost > b->cost;//a->openNode.size() > b->openNode.size() && 
+		return a->cost > b->cost && a->openNode.size() > b->openNode.size();
 	}
 };
 
