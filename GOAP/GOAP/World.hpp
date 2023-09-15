@@ -26,6 +26,12 @@ public:
 	{
 		m_mapValue.clear();
 	}
+	void Copy(const World<T>* const world)
+	{
+		m_mapValue.clear();
+		m_mapValue.reserve(world->m_mapValue.size());
+		m_mapValue = world->m_mapValue;
+	}
 	void ModifyRessource(std::string ressource, T value)
 	{		
 		m_mapValue[ressource] += value;

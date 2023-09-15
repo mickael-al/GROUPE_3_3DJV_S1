@@ -11,7 +11,7 @@ public:
 	GoapManager(World<float> * const world, std::vector<Action*> & allActions, std::vector<Action*> & objectifs);
 	GoapManager(const GoapManager * const goapManager);	
 	~GoapManager();	
-	std::vector<const Action*> Resolve() const;
+	std::vector<const Action*> Resolve();
 private:
 	void CalculateResolver() const;
 private:
